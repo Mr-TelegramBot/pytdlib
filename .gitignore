@@ -102,3 +102,12 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# tdlib folders
+Database/
+Files/
+
+
+# pycharm files
+.idea/
