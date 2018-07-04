@@ -8,8 +8,7 @@ def parse_message(
     if is_edited_message:
         m = pytdlib_types.Message(
             message_id=message['message_id'],
-            chat=(pytdlib_types.Chat(id=message['chat_id'],
-                                     type=get_type_chat(message['chat_id']))),
+            chat=parse_chat(message['chat_id']),
             edited=True,
             text=message['new_content']['text']['text']
         )
@@ -17,8 +16,7 @@ def parse_message(
         new_message = message['message']
         m = pytdlib_types.Message(
             message_id=new_message['id'],
-            chat=(pytdlib_types.Chat(id=new_message['chat_id'],
-                                     type=get_type_chat(new_message['chat_id']))),
+            chat=parse_chat(new_message['chat_id']),
             edited=False,
             text=new_message['content']['text']['text']
         )
@@ -36,11 +34,17 @@ def parse_deleted_messages(
         parsed_messages.append(
             pytdlib_types.Message(
                 message_id=message,
-                chat=(pytdlib_types.Chat(id=chat_id, type=get_type_chat(chat_id)) if chat_id is not None else None)
+                chat=parse_chat(chat_id)
             )
         )
 
     return pytdlib_types.Messages(len(parsed_messages), parsed_messages)
+
+
+def parse_chat(chat_id: int) -> pytdlib_types.Chat:
+    if chat_id is None:
+        return None
+    return pytdlib_types.Chat(id=chat_id, type=get_type_chat(chat_id))
 
 
 def get_type_chat(
