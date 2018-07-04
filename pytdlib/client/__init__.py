@@ -1,4 +1,4 @@
 from .client import Client
 from .handlers import (
-    RawUpdateHandler
+    RawUpdateHandler, MessageHandler, DeletedMessagesHandler
 )

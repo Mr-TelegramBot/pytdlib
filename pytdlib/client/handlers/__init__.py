@@ -1,1 +1,3 @@
+from .deleted_messages_handler import DeletedMessagesHandler
+from .message_handler import MessageHandler
 from .raw_update_handler import RawUpdateHandler
